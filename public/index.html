@@ -15,6 +15,14 @@
     tailwind.config = { theme: { extend: { fontFamily: { display: ['"Bricolage Grotesque"', 'sans-serif'], sans: ['Inter', 'sans-serif'] } } } };
   </script>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .cf { padding: 20px 16px; text-align: center; }
+    .cf .lbl { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #fbbf24; font-weight: 600; }
+    .cf .amt { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.45rem; letter-spacing: -.02em; margin-top: 8px; }
+    .cf .amt small { font-size: .75rem; font-weight: 500; color: #94a3b8; }
+    .cf .amt.ask { font-size: .95rem; font-weight: 600; color: #94a3b8; letter-spacing: 0; padding: 6px 0; }
+    .cf .per { font-size: .7rem; color: #94a3b8; margin-top: 2px; }
+  </style>
 </head>
 <body class="font-sans text-slate-100 antialiased">
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -88,10 +96,13 @@
       <ul id="teacherGrid" class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></ul>
     </section>
 
-    <!-- FEES -->
+    <!-- FEES (PG to Grade 10) -->
     <section id="fees" class="mx-auto max-w-6xl px-5 py-16">
-      <div class="reveal"><p class="eyebrow">Fees</p><h2 class="sec-title mt-3">Simple, clear fees</h2></div>
-      <div id="feeGrid" class="mt-8 grid gap-4 sm:grid-cols-2"></div>
+      <div class="reveal"><p class="eyebrow">Fees</p><h2 class="sec-title mt-3">Simple, clear fees</h2>
+        <p id="feeNote" class="mt-3 text-sm text-slate-400">PG to Grade 10</p></div>
+      <!-- kept hidden on purpose: script.js still writes the old fee cards here -->
+      <div id="feeGrid" hidden></div>
+      <div id="classFees" class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4"></div>
     </section>
 
     <!-- ACTIVITIES -->
@@ -151,6 +162,30 @@
     </button>
   </div>
 
+  <script>
+    /* ====== EDIT FEES HERE: put the amount (numbers only) for each class ====== */
+    const FEE_PERIOD = 'per month';          // for example 'per month' or 'per year'
+    const CLASS_FEES = [
+      { cls: 'PG', fee: 2000 },
+      { cls: 'Grade 1', fee: 2400 },
+      { cls: 'Grade 2', fee: 2800 },
+      { cls: 'Grade 3', fee: 3200 },
+      { cls: 'Grade 4', fee: 3600 },
+      { cls: 'Grade 5', fee: 4000 },
+      { cls: 'Grade 6', fee: 4400 },
+      { cls: 'Grade 7', fee: 4800 },
+      { cls: 'Grade 8', fee: 5200 },
+      { cls: 'Grade 9', fee: 5600 },
+      { cls: 'Grade 10', fee: 6000 }
+    ];
+    document.getElementById('classFees').innerHTML = CLASS_FEES.map(function (c) {
+      var has = String(c.fee).trim() !== '' && !isNaN(Number(c.fee));
+      var amt = has
+        ? '<div class="amt">' + new Intl.NumberFormat('en-PK').format(Number(c.fee)) + ' <small>PKR</small></div>' + (FEE_PERIOD ? '<div class="per">' + FEE_PERIOD + '</div>' : '')
+        : '<div class="amt ask">Contact school office</div>';
+      return '<div class="card cf"><p class="lbl">' + c.cls + '</p>' + amt + '</div>';
+    }).join('');
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
