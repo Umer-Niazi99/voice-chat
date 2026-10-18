@@ -1,0 +1,13 @@
+{
+  "name": "thinkers-alliance-portal",
+  "version": "1.0.0",
+  "description": "Voice Q&A portal for Thinkers Alliance School Bhakkar",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^2.0.2"
+  }
+}
