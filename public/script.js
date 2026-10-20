@@ -245,3 +245,4 @@
 
   addMsg('bot', 'Assalam o Alaikum! Ask me about fees, teachers, subjects or activities.');
 })();
+ 
